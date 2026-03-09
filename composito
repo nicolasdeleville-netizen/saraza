@@ -1,0 +1,15 @@
+services:
+  spark-connect:
+    image: ndeleville/sparkprod
+    container_name: spark-connect
+    command: >
+      /opt/spark/bin/spark-submit
+      --class org.apache.spark.sql.connect.service.SparkConnectServer
+      --conf spark.master=local[*]
+      --conf spark.driver.bindAddress=0.0.0.0
+      --conf spark.ui.enabled=false
+      local:///opt/spark/jars/spark-connect-server_2.12-4.0.0.jar
+    ports:
+      - "15002:15002"
+    volumes:
+      - /data/crudo:/data/crudo
